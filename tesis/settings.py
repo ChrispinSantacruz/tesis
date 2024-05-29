@@ -155,9 +155,9 @@ SIMPLE_JWT = {
 }
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://proyectotesis1.azurewebsites.net',
+    'https://tesisproyectoelectiva.azurewebsites.net',
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    'https://proyectotesis1.azurewebsites.net',
+    'https://tesisproyectoelectiva.azurewebsites.net',
 ]
