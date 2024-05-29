@@ -1,0 +1,72 @@
+{% extends 'layout.html' %}
+
+{% block title %}Inicio - Gestión de Tesis{% endblock %}
+
+{% block header %}Bienvenido a la Plataforma de Gestión de Tesis{% endblock %}
+
+{% block content %}
+<style>
+    #inicio {
+        background-image: url('https://tesisalmacenamiento.blob.core.windows.net/tesis/Gifbanner.gif');
+        background-size: cover;
+        background-position: center;
+        height: 100vh; /* Ocupa toda la altura de la pantalla */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+    }
+
+    .welcome-box {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente para mejor legibilidad */
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .welcome-box h2 {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+    .welcome-box p {
+        font-size: 18px;
+        margin-bottom: 30px;
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #000;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        margin: 0 10px; /* Espaciado entre botones */
+        transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<section id="inicio">
+    <div class="welcome-box">
+        <h2>Bienvenido a la Plataforma de Gestión de Tesis</h2>
+        <p>Utilice el menú de navegación para gestionar estudiantes y tesis.</p>
+        <div class="button-group">
+            <a href="{% url 'subir_tesis' %}" class="btn">Subir Tesis</a>
+            <a href="{% url 'gestion_tesis' %}" class="btn">Gestión de Tesis</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

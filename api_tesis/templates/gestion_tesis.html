@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+
+{% block title %}Gestión de Tesis - Docente{% endblock %}
+
+{% block header %}Gestión de Tesis{% endblock %}
+
+{% block content %}
+<div class="gestion-container">
+    <h2 class="title">Gestión de Tesis</h2>
+    <div class="tesis-list-container">
+        <table class="tesis-table">
+            <thead>
+                <tr>
+                    <th class="table-header">Título</th>
+                    <th class="table-header">Descripción</th>
+                    <th class="table-header">Estudiante</th>
+                    <th class="table-header">Estado</th>
+                    <th class="table-header">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tesis in tesis_list %}
+                <tr>
+                    <td>{{ tesis.title }}</td>
+                    <td>{{ tesis.description }}</td>
+                    <td>{{ tesis.student.username }}</td>
+                    <td>
+                        {% if tesis.approved %}
+                            <span class="status approved">Aprobado</span>
+                        {% else %}
+                            <span class="status not-approved">No Aprobado</span>
+                        {% endif %}
+                    </td>
+                    <td class="action-cell">
+                        {% if not tesis.approved %}
+                        <form method="post" action="{% url 'aprobar_tesis' tesis.id %}" class="action-form">
+                            {% csrf_token %}
+                            <button type="submit" class="action-button approve-button">Aprobar</button>
+                        </form>
+                        {% else %}
+                        <form method="post" action="{% url 'rechazar_tesis' tesis.id %}" class="action-form">
+                            {% csrf_token %}
+                            <button type="submit" class="action-button reject-button">Rechazar</button>
+                        </form>
+                        {% endif %}
+                        <!-- Enlace de descarga -->
+                        <a href="{{ tesis.file.url }}" class="action-button download-button">Descargar Archivo</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+

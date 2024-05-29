@@ -1,0 +1,77 @@
+{% extends 'layout.html' %}
+
+{% block title %}Subir Tesis - Gestión de Tesis{% endblock %}
+
+{% block header %}Subir Tesis{% endblock %}
+
+{% block content %}
+<style>
+    .upload-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .upload-container .title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .upload-container .form-group {
+        margin-bottom: 20px;
+    }
+
+    .upload-container label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .upload-container input[type="text"],
+    .upload-container input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .upload-container button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .upload-container button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="upload-container">
+    <h2 class="title">Subir Tesis</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_title">Título:</label>
+            {{ form.title }}
+        </div>
+        <div class="form-group">
+            <label for="id_description">Descripción:</label>
+            {{ form.description }}
+        </div>
+        <div class="form-group">
+            <label for="id_file">Archivo:</label>
+            {{ form.file }}
+        </div>
+        <button type="submit">Subir Tesis</button>
+    </form>
+</div>
+{% endblock %}
+

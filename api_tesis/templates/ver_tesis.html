@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block title %}Gestión de Tesis - Docente{% endblock %}
+
+{% block header %}Gestión de Tesis{% endblock %}
+
+{% block content %}
+<div class="gestion-container">
+    <h2 class="title">Tesis</h2>
+    <div class="tesis-list-container">
+        <table class="tesis-table">
+            <thead>
+                <tr>
+                    <th class="table-header">Título</th>
+                    <th class="table-header">Descripción</th>
+                    <th class="table-header">Estudiante</th>
+                    <th class="table-header">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tesis in tesis_list %}
+                <tr>
+                    <td>{{ tesis.title }}</td>
+                    <td>{{ tesis.description }}</td>
+                    <td>{{ tesis.student.username }}</td>
+                    <td>
+                        {% if tesis.approved %}
+                            <span class="status approved">Aprobado</span>
+                        {% else %}
+                            <span class="status not-approved">No Aprobado</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
