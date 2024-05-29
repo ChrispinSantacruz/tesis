@@ -19,8 +19,6 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 from .models import Thesis
 
-
-
 @login_required
 def rechazar_tesis(request, tesis_id):
     try:
