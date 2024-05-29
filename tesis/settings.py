@@ -86,7 +86,7 @@ DATABASES = {
         'NAME': 'tesisdb',
         'USER': 'chris',
         'PASSWORD': 'Pipeman06.',
-        'HOST': 'tesisbasededatos.postgres.database.azure.com',
+        'HOST': 'electiva.postgres.database.azure.com',
         'PORT': '5432',
         'OPTIONS': {
 
