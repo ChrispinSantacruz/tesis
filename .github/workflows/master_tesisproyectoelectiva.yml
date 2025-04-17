@@ -12,11 +12,11 @@ jobs:
 
     steps:
       # Paso 1: Checkout del código
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
       # Paso 2: Configurar Python
       - name: Set up Python version
-        uses: actions/setup-python@v2  # Usar v2 para setup-python
+        uses: actions/setup-python@v4  # Versión actualizada
         with:
           python-version: '3.12'
 
@@ -32,11 +32,11 @@ jobs:
 
       # Paso 5: Crear el archivo zip para el despliegue
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+        run: zip -r release.zip ./*
 
       # Paso 6: Subir el artefacto para el trabajo de despliegue
       - name: Upload artifact for deployment jobs
-        uses: actions/upload-artifact@v2  # Usar v2 para upload-artifact
+        uses: actions/upload-artifact@v3  # Versión actualizada
         with:
           name: python-app
           path: |
@@ -55,7 +55,7 @@ jobs:
     steps:
       # Paso 1: Descargar el artefacto desde el trabajo de build
       - name: Download artifact from build job
-        uses: actions/download-artifact@v2  # Usar v2 para download-artifact
+        uses: actions/download-artifact@v3  # Versión actualizada
         with:
           name: python-app
 
