@@ -12,7 +12,7 @@ jobs:
 
     steps:
       # Paso 1: Checkout del código
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # Paso 2: Configurar Python
       - name: Set up Python version
@@ -36,7 +36,7 @@ jobs:
 
       # Paso 6: Subir el artefacto para el trabajo de despliegue
       - name: Upload artifact for deployment jobs
-        uses: actions/upload-artifact@v3  # Versión actualizada
+        uses: actions/upload-artifact@v4  # Versión actualizada
         with:
           name: python-app
           path: |
@@ -55,7 +55,7 @@ jobs:
     steps:
       # Paso 1: Descargar el artefacto desde el trabajo de build
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3  # Versión actualizada
+        uses: actions/download-artifact@v4  # Versión actualizada
         with:
           name: python-app
 
