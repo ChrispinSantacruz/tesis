@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4  # Actualización a la versión 4 de actions/checkout
+      - uses: actions/checkout@v4
 
       - name: Set up Python version
-        uses: actions/setup-python@v2  # Asegúrate de usar la última versión de setup-python
+        uses: actions/setup-python@v1
         with:
           python-version: '3.12'
 
@@ -32,10 +32,12 @@ jobs:
         run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment jobs
-        uses: actions/upload-artifact@v4  # Actualización a la versión 4
+        uses: actions/upload-artifact@v3
         with:
           name: python-app
-          path: release.zip
+          path: |
+            release.zip
+            !venv/
 
   deploy:
     runs-on: ubuntu-latest
@@ -44,11 +46,11 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write  # Esto es requerido para solicitar el JWT
+      id-token: write #This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v4  # Actualización a la versión 4
+        uses: actions/download-artifact@v4
         with:
           name: python-app
 
