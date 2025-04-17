@@ -36,7 +36,7 @@ jobs:
 
       # Paso 6: Subir el artefacto para el trabajo de despliegue
       - name: Upload artifact for deployment jobs
-        uses: actions/upload-artifact@v2  # Usar v2 para evitar el error
+        uses: actions/upload-artifact@v3  # Usar v2 para evitar el error
         with:
           name: python-app
           path: |
@@ -55,7 +55,7 @@ jobs:
     steps:
       # Paso 1: Descargar el artefacto desde el trabajo de build
       - name: Download artifact from build job
-        uses: actions/download-artifact@v2  # Usar v2 para evitar el error
+        uses: actions/download-artifact@v3  # Usar v2 para evitar el error
         with:
           name: python-app
 
