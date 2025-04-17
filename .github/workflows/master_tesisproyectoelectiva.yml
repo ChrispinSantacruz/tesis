@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4  # Actualización a la versión 4 de actions/checkout
 
       - name: Set up Python version
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2  # Asegúrate de usar la última versión de setup-python
         with:
           python-version: '3.12'
 
@@ -32,12 +32,10 @@ jobs:
         run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment jobs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4  # Actualización a la versión 4
         with:
           name: python-app
-          path: |
-            release.zip
-            !venv/
+          path: release.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -46,11 +44,11 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write  # Esto es requerido para solicitar el JWT
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4  # Actualización a la versión 4
         with:
           name: python-app
 
@@ -60,9 +58,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_9B3224F4008B479F8EA5AD0CA6A8170C }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F2D618242CB341B4B4275A9D0C3D79C5 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9DCBFE9999C441FA82DECF4E1D995202 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
