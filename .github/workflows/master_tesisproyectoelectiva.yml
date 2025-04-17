@@ -29,28 +29,28 @@ jobs:
       - name: Zip artifact for deployment
         run: |
           zip -r release.zip ./*  # Comprime todo el directorio en release.zip
-          ls -l release.zip  # Verifica que release.zip se haya creado correctamente
+          ls -l release.zip  # Verifica que release.zip esté presente antes de continuar
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v3
         with:
-          name: python-app  # Asegúrate de que el nombre coincida con el nombre en el paso de descarga
+          name: python-app  # El nombre debe coincidir exactamente con el nombre en el paso de descarga
           path: release.zip  # La ruta del archivo a subir
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build  # Asegura que el trabajo de despliegue depende del de construcción
+    needs: build  # Asegura que 'deploy' dependa de 'build'
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write
+      id-token: write  # Esto es requerido para solicitar el JWT
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
-          name: python-app  # El nombre debe coincidir exactamente con el de la carga del artefacto
+          name: python-app  # Asegúrate de que el nombre coincida exactamente con el de la carga
 
       - name: Unzip artifact for deployment
         run: unzip release.zip  # Descomprime el archivo para el despliegue
