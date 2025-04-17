@@ -77,4 +77,4 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: 'tesisproyectoelectiva'  # Nombre de tu aplicación en Azure
-          slot-name: 'production'  # Nombre del slot de producción
+          slot-name: 'Production'  # Nombre del slot de producción
