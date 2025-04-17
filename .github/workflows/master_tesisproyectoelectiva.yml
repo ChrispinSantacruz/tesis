@@ -11,62 +11,70 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Paso 1: Checkout del código
       - uses: actions/checkout@v4
 
+      # Paso 2: Configurar Python
       - name: Set up Python version
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2  # Actualizado a v2
         with:
           python-version: '3.12'
 
+      # Paso 3: Crear y activar entorno virtual
       - name: Create and start virtual environment
         run: |
           python -m venv venv
-          source venv/bin/activate
+          source venv/bin/activate  # En sistemas Unix/Mac
 
+      # Paso 4: Instalar dependencias
       - name: Install dependencies
         run: pip install -r requirements.txt
-        
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
+      # Paso 5: Crear el archivo zip para el despliegue
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
 
+      # Paso 6: Subir el artefacto para el trabajo de despliegue
       - name: Upload artifact for deployment jobs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v2  # Usar v2 para evitar el error
         with:
           name: python-app
           path: |
             release.zip
-            !venv/
+            !venv/  # Evita subir el directorio venv
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: build  # Este trabajo depende del trabajo build
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write  # Esto es necesario para solicitar el JWT
 
     steps:
+      # Paso 1: Descargar el artefacto desde el trabajo de build
       - name: Download artifact from build job
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v2  # Usar v2 para evitar el error
         with:
           name: python-app
 
+      # Paso 2: Descomprimir el artefacto para el despliegue
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
+      # Paso 3: Iniciar sesión en Azure
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_9B3224F4008B479F8EA5AD0CA6A8170C }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F2D618242CB341B4B4275A9D0C3D79C5 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9DCBFE9999C441FA82DECF4E1D995202 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}  # Secreto actualizado
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}  # Secreto actualizado
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}  # Secreto actualizado
 
+      # Paso 4: Desplegar en Azure Web App
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
-          app-name: 'tesisproyectoelectiva'
-          slot-name: 'Production'
+          app-name: 'tesisproyectoelectiva'  # Nombre de tu aplicación en Azure
+          slot-name: 'Production'  # Nombre del slot de producción
